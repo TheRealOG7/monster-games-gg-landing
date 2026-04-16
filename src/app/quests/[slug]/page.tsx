@@ -91,15 +91,14 @@ export default async function QuestPage({
               </h1>
 
               {/* Sponsor mark */}
-              <div className="flex items-center gap-3 mb-5">
-                <svg width="28" height="28" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" className="opacity-80">
-                  <path d="M 14 6 L 10 24 L 16 22 L 12 42" stroke="#33f57a" strokeWidth="5" strokeLinecap="round" />
-                  <path d="M 24 4 L 20 24 L 26 22 L 22 44" stroke="#33f57a" strokeWidth="5" strokeLinecap="round" opacity="0.65" />
-                  <path d="M 34 6 L 30 24 L 36 22 L 32 42" stroke="#33f57a" strokeWidth="5" strokeLinecap="round" opacity="0.35" />
-                </svg>
-                <span className="text-sm font-black text-on-surface-variant uppercase tracking-widest">
-                  Monster Energy
-                </span>
+              <div className="mb-6">
+                <Image
+                  src="/monster-logo.png"
+                  alt="Monster Energy"
+                  width={200}
+                  height={62}
+                  className="h-14 w-auto object-contain"
+                />
               </div>
 
               <p className="text-on-surface-variant text-sm leading-relaxed max-w-lg">

@@ -1,15 +1,15 @@
 "use client";
 
 import { useState } from "react";
-import { List, X, Globe, MagnifyingGlass } from "@phosphor-icons/react";
+import { List, X } from "@phosphor-icons/react";
 import Image from "next/image";
 import Link from "next/link";
 
 const navLinks = [
-  { label: "Play" },
-  { label: "Explore" },
-  { label: "Collect" },
-  { label: "GAM3 Awards" },
+  { label: "Play", href: "https://games.gg/games/" },
+  { label: "Explore", href: "https://games.gg/guides/" },
+  { label: "Collect", href: "https://games.gg/mystery-box/" },
+  { label: "GAM3 Awards", href: "https://games.gg/gam3awards/" },
 ];
 
 export default function Navbar() {
@@ -31,34 +31,43 @@ export default function Navbar() {
 
         <div className="hidden items-center gap-1 md:flex flex-1">
           {navLinks.map((link) => (
-            <span
+            <a
               key={link.label}
-              className="flex items-center gap-1 px-3 py-1.5 text-[13px] font-medium text-white/70 cursor-default select-none hover:text-white transition-colors rounded-md hover:bg-white/5"
+              href={link.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1 px-3 py-1.5 text-[13px] font-medium text-white/70 hover:text-white transition-colors rounded-md hover:bg-white/5"
             >
               {link.label}
               <svg width="10" height="10" viewBox="0 0 10 10" fill="none" className="opacity-50 mt-px">
                 <path d="M2 3.5L5 6.5L8 3.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
-            </span>
+            </a>
           ))}
-          <span className="px-3 py-1.5 text-[13px] font-semibold text-primary cursor-default select-none hover:text-primary/80 transition-colors">
+          <a
+            href="https://games.gg/games-plus/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-3 py-1.5 text-[13px] font-semibold text-primary hover:text-primary/80 transition-colors"
+          >
             GAMES+
-          </span>
+          </a>
         </div>
 
         <div className="hidden md:flex items-center gap-2">
-          <button className="w-8 h-8 flex items-center justify-center text-white/50 hover:text-white transition-colors rounded-md hover:bg-white/5" aria-label="Language">
-            <Globe size={17} />
-          </button>
-          <button className="w-8 h-8 flex items-center justify-center text-white/50 hover:text-white transition-colors rounded-md hover:bg-white/5" aria-label="Search">
-            <MagnifyingGlass size={17} />
-          </button>
           <div className="w-px h-5 bg-white/10 mx-1" />
-          <span className="text-[13px] font-medium text-white/70 cursor-default px-2 hover:text-white transition-colors">
-            Sign In
-          </span>
           <a
-            href="#quest"
+            href="https://games.gg"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[13px] font-medium text-white/70 px-2 hover:text-white transition-colors"
+          >
+            Sign In
+          </a>
+          <a
+            href="https://games.gg"
+            target="_blank"
+            rel="noopener noreferrer"
             className="bg-primary text-black px-4 py-1.5 font-bold text-[13px] rounded-full hover:bg-white transition-all active:scale-95 whitespace-nowrap ml-1"
           >
             Get Started
@@ -77,11 +86,24 @@ export default function Navbar() {
       {menuOpen && (
         <div className="border-t border-white/5 bg-[#0d0f14] px-6 pb-4 md:hidden">
           {navLinks.map((link) => (
-            <span key={link.label} className="block py-3 text-[13px] font-medium text-white/70">
+            <a
+              key={link.label}
+              href={link.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block py-3 text-[13px] font-medium text-white/70 hover:text-white transition-colors"
+            >
               {link.label}
-            </span>
+            </a>
           ))}
-          <span className="block py-3 text-[13px] font-semibold text-primary">GAMES+</span>
+          <a
+            href="https://games.gg/games-plus/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block py-3 text-[13px] font-semibold text-primary"
+          >
+            GAMES+
+          </a>
           <a
             href="#quest"
             onClick={() => setMenuOpen(false)}

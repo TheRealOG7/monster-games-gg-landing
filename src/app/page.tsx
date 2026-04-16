@@ -1,21 +1,19 @@
 import Hero from "@/components/Hero";
-import QuestBoard from "@/components/QuestBoard";
-import HowItWorks from "@/components/HowItWorks";
-import PrizeReveal from "@/components/PrizeReveal";
 import NewsHub from "@/components/NewsHub";
+import QuestBoard from "@/components/QuestBoard";
 import MerchShelf from "@/components/MerchShelf";
-import FinalCTA from "@/components/FinalCTA";
+import PrizeReveal from "@/components/PrizeReveal";
+import NewsletterSignup from "@/components/NewsletterSignup";
 
 export default function Home() {
   return (
     <main>
       <Hero />
-      <QuestBoard />
-      <HowItWorks />
-      <PrizeReveal />
       <NewsHub />
+      <QuestBoard />
       <MerchShelf />
-      <FinalCTA />
+      <PrizeReveal />
+      <NewsletterSignup />
     </main>
   );
 }

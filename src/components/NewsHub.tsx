@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
@@ -11,7 +12,7 @@ export default function NewsHub() {
   const rest = articles.slice(1);
 
   return (
-    <section id="news" className="py-20 bg-surface">
+    <section id="news" className="pt-16 pb-12 bg-surface">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <motion.div
           className="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-10 gap-4"
@@ -22,7 +23,7 @@ export default function NewsHub() {
         >
           <div>
             <p className="text-primary text-[10px] tracking-[0.3em] uppercase mb-4 font-black">
-              What&apos;s Happening
+              What's Happening
             </p>
             <h2 className="font-black text-4xl md:text-5xl tight-tracking text-white uppercase">
               Monster Gaming Hub.
@@ -39,18 +40,19 @@ export default function NewsHub() {
           </Link>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_340px] gap-4">
+        {/* Desktop: 2-col grid. Mobile: horizontal scroll */}
+        <div className="hidden lg:grid grid-cols-1 lg:grid-cols-[1fr_340px] gap-4 lg:items-stretch">
           {/* Featured card */}
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
+            className="lg:h-full"
           >
             <Link
               href={`/news/${featured.slug}`}
-              className="group relative overflow-hidden rounded-2xl bg-background border border-white/8 hover:border-white/15 transition-all cursor-pointer block"
-              style={{ minHeight: "480px" }}
+              className="group relative overflow-hidden rounded-2xl bg-background border border-white/8 hover:border-white/15 transition-all cursor-pointer block h-full min-h-[480px]"
             >
               <div
                 className="absolute inset-0 bg-cover bg-center opacity-50 group-hover:scale-105 transition-transform duration-700"
@@ -80,7 +82,7 @@ export default function NewsHub() {
           </motion.div>
 
           {/* Stacked cards */}
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-4 lg:h-full">
             {rest.map((article, i) => (
               <motion.div
                 key={article.slug}
@@ -88,11 +90,11 @@ export default function NewsHub() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: (i + 1) * 0.08 }}
+                className="flex-1"
               >
                 <Link
                   href={`/news/${article.slug}`}
-                  className="group relative overflow-hidden rounded-2xl bg-background border border-white/8 hover:border-white/15 transition-all cursor-pointer block"
-                  style={{ minHeight: "100px" }}
+                  className="group relative overflow-hidden rounded-2xl bg-background border border-white/8 hover:border-white/15 transition-all cursor-pointer flex h-full min-h-[90px]"
                 >
                   <div
                     className="absolute inset-0 bg-cover bg-center opacity-40 group-hover:scale-105 transition-transform duration-700"
@@ -100,7 +102,7 @@ export default function NewsHub() {
                   />
                   <div className="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-transparent" />
 
-                  <div className="relative p-4 flex items-center gap-4 h-full">
+                  <div className="relative p-4 flex items-center gap-4 w-full">
                     <div className="w-10 h-10 flex-shrink-0 relative overflow-hidden rounded">
                       <Image
                         src={article.image}
@@ -128,6 +130,42 @@ export default function NewsHub() {
               </motion.div>
             ))}
           </div>
+        </div>
+
+        {/* Mobile: horizontal scroll */}
+        <div
+          className="lg:hidden flex gap-4 overflow-x-auto pb-2"
+          style={{ scrollbarWidth: "none", msOverflowStyle: "none" } as React.CSSProperties}
+        >
+          {[featured, ...rest].map((article, i) => (
+            <Link
+              key={article.slug}
+              href={`/news/${article.slug}`}
+              className="group relative overflow-hidden rounded-2xl bg-background border border-white/8 flex-shrink-0 w-[300px]"
+              style={{ minHeight: "280px" }}
+            >
+              <div
+                className="absolute inset-0 bg-cover bg-center opacity-50"
+                style={{ backgroundImage: `url(${article.image})` }}
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
+
+              <div className="absolute top-3 left-3">
+                <span className="bg-primary text-black text-[8px] font-black uppercase tracking-widest px-2 py-0.5">
+                  {article.category}
+                </span>
+              </div>
+
+              <div className="absolute bottom-0 left-0 right-0 p-4">
+                <span className="text-[8px] font-black text-on-surface-variant uppercase tracking-widest block mb-1">
+                  {article.date}
+                </span>
+                <h3 className="font-black text-white uppercase text-sm leading-tight line-clamp-3">
+                  {article.title}
+                </h3>
+              </div>
+            </Link>
+          ))}
         </div>
       </div>
     </section>

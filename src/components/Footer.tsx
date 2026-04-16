@@ -19,15 +19,6 @@ const columns = [
   },
 ];
 
-function MonsterMark() {
-  return (
-    <svg width="28" height="28" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" className="opacity-70">
-      <path d="M 14 6 L 10 24 L 16 22 L 12 42" stroke="#33f57a" strokeWidth="5" strokeLinecap="round" />
-      <path d="M 24 4 L 20 24 L 26 22 L 22 44" stroke="#33f57a" strokeWidth="5" strokeLinecap="round" opacity="0.65" />
-      <path d="M 34 6 L 30 24 L 36 22 L 32 42" stroke="#33f57a" strokeWidth="5" strokeLinecap="round" opacity="0.4" />
-    </svg>
-  );
-}
 
 export default function Footer() {
   return (
@@ -44,12 +35,13 @@ export default function Footer() {
           <p className="text-on-surface-variant text-xs leading-relaxed max-w-[280px]">
             Monster Energy x GAMES.GG. Play. Prove it. Win.
           </p>
-          <div className="flex items-center gap-2">
-            <MonsterMark />
-            <span className="text-on-surface-variant text-xs font-black uppercase tracking-widest opacity-70">
-              Monster Energy
-            </span>
-          </div>
+          <Image
+            src="/monster-logo.png"
+            alt="Monster Energy"
+            width={100}
+            height={32}
+            className="h-8 w-auto object-contain opacity-80"
+          />
         </div>
 
         {columns.map((col) => (

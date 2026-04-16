@@ -13,31 +13,31 @@ const products = [
   {
     name: "Monster Energy Ultra White",
     category: "DRINK",
-    image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=90",
+    image: "/monster-ultra-white.png",
     inPrizePool: true,
   },
   {
     name: "Monster Energy Ultra Watermelon",
     category: "DRINK",
-    image: "https://images.unsplash.com/photo-1546519638-68e109498ffc?w=600&q=90",
+    image: "/monster-watermelon.png",
     inPrizePool: true,
   },
   {
     name: "Monster Energy Snapback Cap",
     category: "MERCH",
-    image: "https://images.unsplash.com/photo-1588850561407-ed78c282e89b?w=600&q=90",
+    image: "/monster-cap.png",
     inPrizePool: true,
   },
   {
     name: "Monster Energy Hoodie",
     category: "MERCH",
-    image: "https://images.unsplash.com/photo-1556821840-3a63f15732ce?w=600&q=90",
+    image: "/monster-hoodie.png",
     inPrizePool: true,
   },
   {
     name: "Monster Energy Backpack",
     category: "MERCH",
-    image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=600&q=90",
+    image: "/monster-backpack.png",
     inPrizePool: true,
   },
 ];

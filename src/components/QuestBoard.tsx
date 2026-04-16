@@ -75,104 +75,113 @@ export default function QuestBoard() {
       >
         {quests.map((quest, i) => {
           const isLocked = quest.status === "locked";
-          const isBoss = quest.isBoss;
+          const isComingSoon = quest.comingSoon;
 
-          return (
-            <Link href={`/quests/${quest.slug}`} key={quest.slug}>
-              <motion.div
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.08, ease: "easeOut" }}
-                className={[
-                  "relative rounded-2xl overflow-hidden bg-background border flex flex-col group cursor-pointer transition-all flex-shrink-0 w-[340px] h-[480px]",
-                  isBoss ? "border-primary/25" : "border-primary/15",
-                  isLocked ? "opacity-55" : "hover:border-white/20",
-                ].join(" ")}
-              >
-                <div className="flex justify-between items-center px-4 py-3 bg-white/3 border-b border-white/5">
-                  <span className="text-[9px] font-black uppercase tracking-widest text-on-surface-variant">
-                    {quest.deadline}
-                  </span>
-                  <span
-                    className={[
-                      "text-[9px] font-black uppercase tracking-widest px-2.5 py-0.5 rounded-full border",
-                      isLocked
-                        ? "bg-white/8 text-on-surface-variant border-white/10"
-                        : "bg-primary/15 text-primary border-primary/25",
-                    ].join(" ")}
-                  >
-                    {isBoss ? "COMING SOON" : isLocked ? "LOCKED" : "ACTIVE"}
-                  </span>
-                </div>
+          const cardContent = (
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: i * 0.08, ease: "easeOut" }}
+              className={[
+                "relative rounded-2xl overflow-hidden bg-background border flex flex-col flex-shrink-0 w-[340px] h-[480px]",
+                isComingSoon
+                  ? "border-white/8 opacity-50 cursor-not-allowed"
+                  : isLocked
+                  ? "border-primary/15 opacity-55 cursor-pointer group hover:border-white/20 transition-all"
+                  : "border-primary/15 cursor-pointer group hover:border-white/20 transition-all",
+              ].join(" ")}
+            >
+              <div className="flex justify-between items-center px-4 py-3 bg-white/3 border-b border-white/5">
+                <span className="text-[9px] font-black uppercase tracking-widest text-on-surface-variant">
+                  {quest.deadline}
+                </span>
+                <span
+                  className={[
+                    "text-[9px] font-black uppercase tracking-widest px-2.5 py-0.5 rounded-full border",
+                    isComingSoon
+                      ? "bg-white/5 text-on-surface-variant/50 border-white/8"
+                      : isLocked
+                      ? "bg-white/8 text-on-surface-variant border-white/10"
+                      : "bg-primary/15 text-primary border-primary/25",
+                  ].join(" ")}
+                >
+                  {isComingSoon ? "COMING SOON" : isLocked ? "LOCKED" : "ACTIVE"}
+                </span>
+              </div>
 
-                <div className="relative aspect-[16/9] overflow-hidden">
-                  <Image
-                    src={quest.badgeImage}
-                    alt={quest.title}
-                    fill
-                    className="object-cover opacity-35 group-hover:scale-105 transition-transform duration-700"
-                    sizes="340px"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
-                  {isLocked && (
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="w-12 h-12 rounded-full bg-black/60 border border-white/10 flex items-center justify-center backdrop-blur-sm">
-                        {isBoss ? (
-                          <Trophy size={22} className="text-primary" />
-                        ) : (
-                          <Lock size={20} className="text-on-surface-variant" />
-                        )}
-                      </div>
+              <div className="relative aspect-[16/9] overflow-hidden">
+                <Image
+                  src={quest.badgeImage}
+                  alt={quest.title}
+                  fill
+                  className={`object-cover opacity-35 transition-transform duration-700 ${!isComingSoon ? "group-hover:scale-105" : ""}`}
+                  sizes="340px"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
+                {(isLocked || isComingSoon) && (
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="w-12 h-12 rounded-full bg-black/60 border border-white/10 flex items-center justify-center backdrop-blur-sm">
+                      {isComingSoon ? (
+                        <Trophy size={22} className="text-on-surface-variant/50" />
+                      ) : (
+                        <Lock size={20} className="text-on-surface-variant" />
+                      )}
                     </div>
-                  )}
+                  </div>
+                )}
+                {!isComingSoon && (
                   <div className="absolute top-3 left-3">
                     <span className="text-[9px] font-black uppercase tracking-widest text-primary">
                       +{quest.xpTotal} XP
                     </span>
                   </div>
+                )}
+              </div>
+
+              <div className="p-5 flex-1 flex flex-col gap-3">
+                <div className="flex items-center gap-2">
+                  {quest.enrolled ? (
+                    <>
+                      <div className="flex -space-x-1.5">
+                        {avatarIds.map((n) => (
+                          <Image
+                            key={n}
+                            src={`https://i.pravatar.cc/20?img=${n}`}
+                            alt="Player"
+                            width={20}
+                            height={20}
+                            className="w-5 h-5 rounded-full border-2 border-background object-cover flex-shrink-0"
+                          />
+                        ))}
+                      </div>
+                      <span className="text-[10px] text-on-surface-variant font-bold">
+                        +{quest.enrolled} on quest
+                      </span>
+                    </>
+                  ) : (
+                    <span className="text-[10px] text-on-surface-variant/50 font-bold uppercase tracking-widest">
+                      {isComingSoon ? "More details soon" : "Locked"}
+                    </span>
+                  )}
                 </div>
 
-                <div className="p-5 flex-1 flex flex-col gap-3">
-                  <div className="flex items-center gap-2">
-                    {quest.enrolled ? (
-                      <>
-                        <div className="flex -space-x-1.5">
-                          {avatarIds.map((n) => (
-                            <Image
-                              key={n}
-                              src={`https://i.pravatar.cc/20?img=${n}`}
-                              alt="Player"
-                              width={20}
-                              height={20}
-                              className="w-5 h-5 rounded-full border-2 border-background object-cover flex-shrink-0"
-                            />
-                          ))}
-                        </div>
-                        <span className="text-[10px] text-on-surface-variant font-bold">
-                          +{quest.enrolled} on quest
-                        </span>
-                      </>
-                    ) : (
-                      <span className="text-[10px] text-on-surface-variant/50 font-bold uppercase tracking-widest">
-                        Locked
-                      </span>
-                    )}
-                  </div>
+                <div className="flex-1">
+                  <h3 className="font-black uppercase leading-tight mb-1.5 text-white">
+                    {quest.title}
+                  </h3>
+                  <p className="text-on-surface-variant text-xs leading-relaxed line-clamp-2">
+                    {quest.description}
+                  </p>
+                </div>
 
-                  <div className="flex-1">
-                    <h3 className="font-black uppercase leading-tight mb-1.5 text-white">
-                      {quest.title}
-                    </h3>
-                    <p className="text-on-surface-variant text-xs leading-relaxed line-clamp-2">
-                      {quest.description}
-                    </p>
-                  </div>
-
+                {!isComingSoon && (
                   <p className="text-[9px] font-black uppercase tracking-widest text-primary">
                     Reward: {quest.badge}
                   </p>
+                )}
 
+                {!isComingSoon && (
                   <div className="pt-3 border-t border-white/5">
                     <div className="flex justify-between text-[9px] font-black uppercase tracking-widest mb-2">
                       <span className="text-on-surface-variant">Missions</span>
@@ -182,11 +191,22 @@ export default function QuestBoard() {
                       <div className="h-full bg-primary rounded-full" style={{ width: "0%" }} />
                     </div>
                   </div>
-                </div>
-              </motion.div>
+                )}
+              </div>
+            </motion.div>
+          );
+
+          if (isComingSoon) {
+            return <div key={quest.slug}>{cardContent}</div>;
+          }
+
+          return (
+            <Link href={`/quests/${quest.slug}`} key={quest.slug}>
+              {cardContent}
             </Link>
           );
         })}
+
         <div className="flex-shrink-0 w-6" />
       </div>
     </section>
