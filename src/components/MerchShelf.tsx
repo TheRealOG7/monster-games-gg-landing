@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 
@@ -65,7 +66,10 @@ export default function MerchShelf() {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+        <div
+          className="flex gap-4 overflow-x-auto pb-2"
+          style={{ scrollbarWidth: "none", msOverflowStyle: "none" } as React.CSSProperties}
+        >
           {products.map((product, i) => (
             <motion.div
               key={product.name}
@@ -73,7 +77,7 @@ export default function MerchShelf() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: i * 0.07 }}
-              className="group relative rounded-2xl overflow-hidden bg-surface border border-white/8 hover:border-primary/25 transition-all"
+              className="group relative rounded-2xl overflow-hidden bg-surface border border-white/8 hover:border-primary/25 transition-all flex-shrink-0 w-[200px] lg:w-[calc((100%-5*1rem)/6)]"
             >
               <div className="relative aspect-square overflow-hidden">
                 <Image
@@ -81,7 +85,7 @@ export default function MerchShelf() {
                   alt={product.name}
                   fill
                   className="object-cover opacity-70 group-hover:scale-105 transition-transform duration-700 group-hover:opacity-90"
-                  sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 16vw"
+                  sizes="200px"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
                 {product.inPrizePool && (
